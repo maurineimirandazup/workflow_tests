@@ -1,0 +1,4 @@
+FROM python:3.8-slim
+
+RUN apt -y update && apt -y upgrade && apt install -y make sudo curl
+RUN pip install pyinstaller
