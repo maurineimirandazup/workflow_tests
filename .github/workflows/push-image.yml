@@ -3,6 +3,7 @@ name: Push to Dockerhub
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   push_to_registry:
@@ -17,17 +18,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_PASS }}
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: name/app
-          tags: type=semver,pattern={{version}}
-      
+            
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: latest
