@@ -22,6 +22,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./python3-pyinstaller/Dockefile.build
           push: true
           tags: latest
