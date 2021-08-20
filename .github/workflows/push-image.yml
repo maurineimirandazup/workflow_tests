@@ -24,7 +24,7 @@ jobs:
             ./python3-pyinstaller/Dockerfile.build
       
       - name: Print Files Changed
-        run: echo ${{steps.verify-changed-files.outputs.changed_files, 'Dockerfile'}}
+        run: echo ${{steps.verify-changed-files.outputs.changed_files}}
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASS }}
             
       - name: Build and push Docker image
-        if: contains( steps.verify-changed-files.outputs.changed_files, 'Dockerfile')
+        if: contains(steps.verify-changed-files.outputs.changed_files, 'Dockerfile')
         uses: docker/build-push-action@v2
         with:
           file: ./python3-pyinstaller/Dockerfile
@@ -41,7 +41,7 @@ jobs:
           tags: maurineimirandazup/python3-pyinstaller-runner:latest
 
       - name: Build and push Docker image
-        if: contains( steps.verify-changed-files.outputs.changed_files, 'Dockerfile.build')
+        if: contains(steps.verify-changed-files.outputs.changed_files, 'Dockerfile.build')
         uses: docker/build-push-action@v2
         with:
           file: ./python3-pyinstaller/Dockerfile.build
