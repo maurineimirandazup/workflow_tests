@@ -1,8 +1,10 @@
 name: Push to Dockerhub
 
-on:
+on:    
   release:
     types: [published]
+    paths:
+      - 'python3-pyinstaller/**'
   workflow_dispatch:
 
 jobs:
@@ -36,7 +38,7 @@ jobs:
         with:
           file: ./python3-pyinstaller/Dockerfile
           push: true
-          tags: maurineimirandazup/python3-pyinstaller:latest
+          tags: maurineimirandazup/python3-pyinstaller-runner:latest
 
       - name: Build and push Docker image
         if: contains( steps.verify-changed-files.outputs.changed_files, 'Dockerfile.build')
@@ -44,4 +46,4 @@ jobs:
         with:
           file: ./python3-pyinstaller/Dockerfile.build
           push: true
-          tags: maurineimirandazup/python3-pyinstaller:latest
+          tags: maurineimirandazup/python3-pyinstaller-builder:latest
