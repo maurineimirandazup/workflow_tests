@@ -23,9 +23,6 @@ jobs:
             ./python3-pyinstaller/Dockerfile
             ./python3-pyinstaller/Dockerfile.build
       
-      - name: Print Files Changed
-        run: echo ${{steps.verify-changed-files.outputs.changed_files}}
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
