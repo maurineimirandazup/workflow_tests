@@ -24,4 +24,4 @@ jobs:
         with:
           context: ./python3-pyinstaller/
           push: true
-          tags: python3-pyinstaller:latest
+          tags: maurineimirandazup/python-test:latest
