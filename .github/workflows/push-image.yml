@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASS }}
             
       - name: Build and push Docker image
-        if: steps.changes.outputs.runner == 'runner'
+        if: steps.changes.outputs.runner == 'true'
         uses: docker/build-push-action@v2
         with:
           file: ./python3-pyinstaller/Dockerfile
