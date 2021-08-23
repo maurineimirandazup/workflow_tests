@@ -3,7 +3,7 @@ name: Push to Dockerhub
 on:    
   pull_request:
     paths: 
-      - './python3-pyinstaller/**'
+      - 'python3-pyinstaller/**'
     types: [closed]
   workflow_dispatch:
 
