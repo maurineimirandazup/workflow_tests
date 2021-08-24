@@ -10,6 +10,10 @@ on:
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
+    env:
+      registry_host: maurineimirandazup
+      runner_image: python3-pyinstaller-runner:latest
+      builder_image: python3-pyinstaller-builder:latest
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +41,7 @@ jobs:
         with:
           file: ./python3-pyinstaller/Dockerfile
           push: true
-          tags: maurineimirandazup/python3-pyinstaller-runner:latest
+          tags: ${{ env.registry_host }}/${{ env.runner_image }}
 
       - name: Build and push builder
         if: steps.changes.outputs.builder == 'true'
@@ -45,4 +49,4 @@ jobs:
         with:
           file: ./python3-pyinstaller/Dockerfile.build
           push: true
-          tags: maurineimirandazup/python3-pyinstaller-builder:latest
+          tags: ${{ env.registry_host }}/${{ env.builder_image }}
