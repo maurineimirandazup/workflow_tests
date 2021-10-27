@@ -29,8 +29,8 @@ jobs:
       
       - name: Print Changed files
         run: | 
-          for val in ${{ steps.changes.outputs.myfiles_files }}; do 
-            echo valor: $val[@];
+          for val in ${{ steps.changes.outputs.myfiles_files[@] }}; do 
+            echo valor: $val;
             done
 
       # - name: Log in to Docker Hub
