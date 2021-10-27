@@ -2,8 +2,10 @@ name: Build and Push
 
 on:    
   pull_request:
+  
+  workflow_dispatch:
     
-
+    
 jobs:
   push_to_registry:
     name: Build and Push Docker Image
