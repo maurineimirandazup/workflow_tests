@@ -19,17 +19,19 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v2.10.2
         id: changes
         with:
           list-files: json
           filters: |
-            changed:
+            myfiles:
               - '**'
       
       - name: Print Changed files
         run: | 
-          for val in ${{ fromJson(steps.changes.outputs.changed_files) }}; do echo valor:$val; done
+          for val in ${{ steps.changes.outputs.myfiles_files }}; do 
+            echo valor: $val;
+            done
 
       # - name: Log in to Docker Hub
       #   uses: docker/login-action@v1
