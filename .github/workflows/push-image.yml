@@ -22,14 +22,13 @@ jobs:
       - uses: dorny/paths-filter@v2.10.2
         id: changes
         with:
-          list-files: json
           filters: |
             myfiles:
               - '**'
       
       - name: Print Changed files
         run: | 
-          for val in ${{ fromJson(steps.changes.outputs.myfiles_files) }}; do 
+          for val in ${{ steps.changes.outputs.myfiles_files }}; do 
             echo valor: $val;
             done
 
