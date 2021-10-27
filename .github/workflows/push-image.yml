@@ -13,7 +13,7 @@ jobs:
       registry_host: maurineimirandazup
       runner_image: python3-pyinstaller-runner:latest
       builder_image: python3-pyinstaller-builder:latest
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
