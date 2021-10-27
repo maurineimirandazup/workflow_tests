@@ -24,12 +24,14 @@ jobs:
         with:
           list-files: json
           filters: |
-            changed:
+            myfiles:
               - '**'
       
       - name: Print Changed files
         run: | 
-          for val in ${{ fromJson(steps.changes.outputs.changed_files) }}; do echo valor:$val; done
+          for val in ${{ fromJson(steps.changes.outputs.myfiles_files) }}; do 
+            echo valor: $val;
+            done
 
       # - name: Log in to Docker Hub
       #   uses: docker/login-action@v1
