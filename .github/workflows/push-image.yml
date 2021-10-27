@@ -32,7 +32,7 @@ jobs:
       #     password: ${{ secrets.DOCKER_HUB_PASS }}
 
       - name: Print Changed files
-        run: echo ${{ steps.filter.outputs.changed_files }}
+        run: cat ${{ steps.filter.outputs.changed_files }}
 
       # - name: Build and push runner
       #   if: steps.changes.outputs.runner == 'true'
