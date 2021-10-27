@@ -26,7 +26,8 @@ jobs:
               - '**'
       
       - name: Print Changed files
-        run: cat ${{fromJson(steps.changes.outputs.changed_files)}}
+        run: | 
+          for val in ${{ fromJson(steps.changes.outputs.changed_files) }}; do cat $val; done
 
       # - name: Log in to Docker Hub
       #   uses: docker/login-action@v1
