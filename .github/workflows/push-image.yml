@@ -7,44 +7,55 @@ on:
     
     
 jobs:
-  push_to_registry:
-    name: Build and Push Docker Image
+  get_changes:
+    name: Get files changed
     env:
       registry_host: maurineimirandazup
       runner_image: python3-pyinstaller-runner:latest
       builder_image: python3-pyinstaller-builder:latest
     # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.filter.outputs.get_changes }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
 
       - uses: dorny/paths-filter@v2.10.2
-        id: changes
+        id: filter
         with:
           list-files: json
           filters: |
             myfiles:
               - '**'
-      
+
+  push_registry:
+    runs-on: ubuntu-latest
+    name: Push Registrys to Dockerhub
+    needs: get_changes
+    strategy:
+      matrix:
+        package: ${{fromJSON(needs.get_changes.outputs.packages)}}
+
+    steps:
       - name: Print Changed files
         run: | 
-          for val in ${{ steps.changes.outputs.myfiles_files }}; do 
+          for val in ${{ matrix.package }}; do 
             echo valor: $val;
             done
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_PASS }}
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USER }}
+      #     password: ${{ secrets.DOCKER_HUB_PASS }}
 
-      - name: Build and push runner
-        uses: docker/build-push-action@v2
-        with:
-          file: ${{ steps.changes.outputs.myfiles_files }}
-          push: true
-          tags: ${{ env.registry_host }}/${{ env.runner_image }}
+      # - name: Build and push runner
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     file: ${{ steps.filter.outputs.myfiles_files }}
+      #     push: true
+      #     tags: ${{ env.registry_host }}/${{ env.runner_image }}
 
       # - name: Build and push builder
       #   if: steps.changes.outputs.builder == 'true'
